@@ -7,11 +7,12 @@
   "author": "Alex Kahn",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/absolutejs/vulnerabilities-ubuntu.git"
+    "url": "git+https://github.com/absolutejs/vulnerabilities-adapters.git",
+    "directory": "ubuntu"
   },
-  "homepage": "https://github.com/absolutejs/vulnerabilities-ubuntu",
+  "homepage": "https://github.com/absolutejs/vulnerabilities-adapters/tree/main/ubuntu",
   "bugs": {
-    "url": "https://github.com/absolutejs/vulnerabilities-ubuntu/issues"
+    "url": "https://github.com/absolutejs/vulnerabilities-adapters/issues"
   },
   "publishConfig": {
     "access": "public"

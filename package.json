@@ -1,0 +1,23 @@
+{
+  "name": "@absolutejs/vulnerabilities-adapters",
+  "private": true,
+  "type": "module",
+  "description": "Feed and storage adapters for @absolutejs/vulnerabilities.",
+  "workspaces": [
+    "epss",
+    "kev",
+    "osv",
+    "postgres",
+    "ubuntu"
+  ],
+  "scripts": {
+    "build": "bun run --filter './*' build",
+    "check:package": "bun run --filter './*' check:package",
+    "format": "bun run --filter './*' format",
+    "test": "bun run --filter './*' test",
+    "typecheck": "bun run --filter './*' typecheck"
+  },
+  "devDependencies": {
+    "prettier": "3.8.1"
+  }
+}

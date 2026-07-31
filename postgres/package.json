@@ -7,11 +7,12 @@
   "author": "Alex Kahn",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/absolutejs/vulnerabilities-postgres.git"
+    "url": "git+https://github.com/absolutejs/vulnerabilities-adapters.git",
+    "directory": "postgres"
   },
-  "homepage": "https://github.com/absolutejs/vulnerabilities-postgres",
+  "homepage": "https://github.com/absolutejs/vulnerabilities-adapters/tree/main/postgres",
   "bugs": {
-    "url": "https://github.com/absolutejs/vulnerabilities-postgres/issues"
+    "url": "https://github.com/absolutejs/vulnerabilities-adapters/issues"
   },
   "publishConfig": {
     "access": "public"

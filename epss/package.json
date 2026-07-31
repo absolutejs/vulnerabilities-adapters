@@ -7,11 +7,12 @@
   "author": "Alex Kahn",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/absolutejs/vulnerabilities-epss.git"
+    "url": "git+https://github.com/absolutejs/vulnerabilities-adapters.git",
+    "directory": "epss"
   },
-  "homepage": "https://github.com/absolutejs/vulnerabilities-epss",
+  "homepage": "https://github.com/absolutejs/vulnerabilities-adapters/tree/main/epss",
   "bugs": {
-    "url": "https://github.com/absolutejs/vulnerabilities-epss/issues"
+    "url": "https://github.com/absolutejs/vulnerabilities-adapters/issues"
   },
   "publishConfig": {
     "access": "public"

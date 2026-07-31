@@ -7,11 +7,12 @@
   "author": "Alex Kahn",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/absolutejs/vulnerabilities-osv.git"
+    "url": "git+https://github.com/absolutejs/vulnerabilities-adapters.git",
+    "directory": "osv"
   },
-  "homepage": "https://github.com/absolutejs/vulnerabilities-osv",
+  "homepage": "https://github.com/absolutejs/vulnerabilities-adapters/tree/main/osv",
   "bugs": {
-    "url": "https://github.com/absolutejs/vulnerabilities-osv/issues"
+    "url": "https://github.com/absolutejs/vulnerabilities-adapters/issues"
   },
   "publishConfig": {
     "access": "public"
