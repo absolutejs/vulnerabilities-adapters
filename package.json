@@ -11,11 +11,12 @@
     "ubuntu"
   ],
   "scripts": {
-    "build": "bun run --filter './*' build",
-    "check:package": "bun run --filter './*' check:package",
+    "build:osv": "bun run --filter '@absolutejs/vulnerabilities-osv' build",
+    "build": "bun run --filter '@absolutejs/vulnerabilities-epss' build && bun run --filter '@absolutejs/vulnerabilities-kev' build && bun run --filter '@absolutejs/vulnerabilities-osv' build && bun run --filter '@absolutejs/vulnerabilities-postgres' build && bun run --filter '@absolutejs/vulnerabilities-ubuntu' build",
+    "check:package": "bun run --filter '@absolutejs/vulnerabilities-epss' check:package && bun run --filter '@absolutejs/vulnerabilities-kev' check:package && bun run --filter '@absolutejs/vulnerabilities-osv' check:package && bun run --filter '@absolutejs/vulnerabilities-postgres' check:package && bun run --filter '@absolutejs/vulnerabilities-ubuntu' check:package",
     "format": "bun run --filter './*' format",
-    "test": "bun run --filter './*' test",
-    "typecheck": "bun run --filter './*' typecheck"
+    "test": "bun run build:osv && bun run --filter './*' test",
+    "typecheck": "bun run build:osv && bun run --filter './*' typecheck"
   },
   "devDependencies": {
     "prettier": "3.8.1"

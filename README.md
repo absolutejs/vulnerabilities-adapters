@@ -7,13 +7,13 @@ their source monorepo.
 
 ## Packages
 
-| Workspace | Package | Role |
-| --- | --- | --- |
-| `epss/` | `@absolutejs/vulnerabilities-epss` | FIRST EPSS scoring feed |
-| `kev/` | `@absolutejs/vulnerabilities-kev` | CISA Known Exploited Vulnerabilities feed |
-| `osv/` | `@absolutejs/vulnerabilities-osv` | OSV advisory feed |
-| `postgres/` | `@absolutejs/vulnerabilities-postgres` | PostgreSQL persistence |
-| `ubuntu/` | `@absolutejs/vulnerabilities-ubuntu` | Canonical Ubuntu advisory feed |
+| Workspace   | Package                                | Role                                      |
+| ----------- | -------------------------------------- | ----------------------------------------- |
+| `epss/`     | `@absolutejs/vulnerabilities-epss`     | FIRST EPSS scoring feed                   |
+| `kev/`      | `@absolutejs/vulnerabilities-kev`      | CISA Known Exploited Vulnerabilities feed |
+| `osv/`      | `@absolutejs/vulnerabilities-osv`      | OSV advisory feed                         |
+| `postgres/` | `@absolutejs/vulnerabilities-postgres` | PostgreSQL persistence                    |
+| `ubuntu/`   | `@absolutejs/vulnerabilities-ubuntu`   | Canonical Ubuntu advisory feed            |
 
 The npm package names and version histories are unchanged by the move into this
 monorepo.
