@@ -1,0 +1,96 @@
+{
+  "name": "@absolutejs/vulnerabilities-postgres",
+  "version": "0.9.3",
+  "description": "Durable Postgres feeds, findings, alert incidents, policy history, delivery queues, remediation evidence, and risk assessments for AbsoluteJS vulnerability management.",
+  "type": "module",
+  "license": "BSL-1.1",
+  "author": "Alex Kahn",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/absolutejs/vulnerabilities-postgres.git"
+  },
+  "homepage": "https://github.com/absolutejs/vulnerabilities-postgres",
+  "bugs": {
+    "url": "https://github.com/absolutejs/vulnerabilities-postgres/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "absolutejs": {
+    "manifestContract": 2,
+    "runtimePeers": {
+      "@absolutejs/vulnerabilities": {
+        "artifactImports": [
+          "@absolutejs/vulnerabilities"
+        ],
+        "buildExternals": [
+          "@absolutejs/vulnerabilities",
+          "@absolutejs/vulnerabilities/*"
+        ],
+        "optional": false,
+        "range": ">=0.14.0 <0.15",
+        "tested": "0.14.1"
+      },
+      "drizzle-orm": {
+        "artifactImports": [
+          "drizzle-orm",
+          "drizzle-orm/pg-core"
+        ],
+        "buildExternals": [
+          "drizzle-orm"
+        ],
+        "range": ">=1.0.0-rc.4 <2",
+        "tested": "1.0.0-rc.4"
+      }
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./manifest": {
+      "types": "./dist/manifest.d.ts",
+      "import": "./dist/manifest.js"
+    },
+    "./manifest.json": "./dist/manifest.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "format": "prettier --write \"./**/*.{ts,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "build": "rm -rf dist && bun build src/index.ts src/manifest.ts --outdir dist --target=bun --external @absolutejs/manifest --external @absolutejs/vulnerabilities --external '@absolutejs/vulnerabilities/*' --external @sinclair/typebox --external drizzle-orm --external 'drizzle-orm/*' --external postgres --external @neondatabase/serverless && tsc -p tsconfig.build.json && absolute-manifest emit",
+    "verify-package": "absolute-manifest verify-package",
+    "check:package": "bun run format && bun run typecheck && bun run test && bun run verify-package && bun run build && bun run verify-package --artifacts"
+  },
+  "keywords": [
+    "absolutejs",
+    "cve",
+    "postgres",
+    "security",
+    "vulnerability-management"
+  ],
+  "dependencies": {
+    "@absolutejs/manifest": "0.7.2",
+    "@sinclair/typebox": "0.34.52"
+  },
+  "peerDependencies": {
+    "@absolutejs/vulnerabilities": ">=0.14.0 <0.15",
+    "drizzle-orm": ">=1.0.0-rc.4 <2"
+  },
+  "devDependencies": {
+    "@absolutejs/vulnerabilities": "0.14.1",
+    "@electric-sql/pglite": "0.3.14",
+    "@types/bun": "1.3.14",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3",
+    "drizzle-orm": "1.0.0-rc.4"
+  }
+}
