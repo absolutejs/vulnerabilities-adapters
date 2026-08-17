@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.9 - 2026-08-17
+
+- Widen the supported `@absolutejs/vulnerabilities` range to include 0.15 and
+  test against it, so the core and its adapters resolve to a single copy.
+
 ## 0.1.7 - 2026-07-18
 
 - Preserve top-level OSV `database_specific.severity` values so deployment

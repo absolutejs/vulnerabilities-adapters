@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.4 - 2026-08-17
+
+- Widen the supported `@absolutejs/vulnerabilities` range to include 0.15 and
+  test against it, so the core and its adapters resolve to a single copy.
+
 ## 0.9.0 - 2026-07-23
 
 - Export the complete package-owned Drizzle schema and

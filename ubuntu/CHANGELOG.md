@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6 - 2026-08-17
+
+- Widen the supported `@absolutejs/vulnerabilities` range to include 0.15 and
+  test against it, so the core and its adapters resolve to a single copy.
+
 ## 0.1.4 - 2026-07-18
 
 - Verify Ubuntu normalization against `@absolutejs/vulnerabilities@0.10.0`
