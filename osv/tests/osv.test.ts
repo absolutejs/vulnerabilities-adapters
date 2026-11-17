@@ -133,4 +133,77 @@ describe("OSV adapter", () => {
     });
     expect(adapter.fetch({ cursor: null })).rejects.toThrow("misaligned");
   });
+  test("retries a transient 504 on one advisory instead of failing the refresh", async () => {
+    let advisoryCalls = 0;
+    const fetcher: OsvFetch = async (input) => {
+      const url = String(input);
+      if (url.endsWith("/querybatch"))
+        return Response.json({ results: [{ vulns: [{ id: "GO-2024-1" }] }] });
+      advisoryCalls += 1;
+      if (advisoryCalls < 3)
+        return new Response("upstream request timeout", { status: 504 });
+      return Response.json({ ...advisory, id: "GO-2024-1" });
+    };
+    const adapter = createOsvAdapter({
+      fetch: fetcher,
+      queries: [{ package: { ecosystem: "Go", name: "fixture" } }],
+      retry: { backoffMs: 0 },
+    });
+
+    const result = await adapter.fetch({ cursor: null });
+    if (result.status !== "updated") throw new Error("Expected update");
+    expect(result.records.map(({ id }) => id)).toEqual(["GO-2024-1"]);
+    expect(advisoryCalls).toBe(3);
+  });
+
+  test("retries a dropped connection on the batch query", async () => {
+    let batchCalls = 0;
+    const fetcher: OsvFetch = async (input) => {
+      if (String(input).endsWith("/querybatch")) {
+        batchCalls += 1;
+        if (batchCalls === 1) throw new TypeError("fetch failed");
+        return Response.json({ results: [{}] });
+      }
+      throw new Error("no advisories expected");
+    };
+    const adapter = createOsvAdapter({
+      fetch: fetcher,
+      queries: [{ commit: "abc" }],
+      retry: { backoffMs: 0 },
+    });
+
+    const result = await adapter.fetch({ cursor: null });
+    expect(result.status).toBe("updated");
+    expect(batchCalls).toBe(2);
+  });
+
+  test("gives up after its attempts and reports the last status", async () => {
+    let calls = 0;
+    const adapter = createOsvAdapter({
+      fetch: async () => {
+        calls += 1;
+        return new Response("", { status: 503 });
+      },
+      queries: [{ commit: "abc" }],
+      retry: { attempts: 3, backoffMs: 0 },
+    });
+    await expect(adapter.fetch({ cursor: null })).rejects.toThrow("HTTP 503");
+    expect(calls).toBe(3);
+  });
+
+  test("does not retry a definite answer", async () => {
+    let advisoryCalls = 0;
+    const adapter = createOsvAdapter({
+      fetch: async (input) => {
+        if (String(input).endsWith("/querybatch"))
+          return Response.json({ results: [{ vulns: [{ id: "GO-gone" }] }] });
+        advisoryCalls += 1;
+        return new Response("", { status: 404 });
+      },
+      queries: [{ commit: "abc" }],
+      retry: { backoffMs: 0 },
+    });
+    await expect(adapter.fetch({ cursor: null })).rejects.toThrow("HTTP 404");
+    expect(advisoryCalls).toBe(1);
+  });
 });

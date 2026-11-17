@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.10 - 2026-11-17
+
+- Retry a transient OSV answer (429, 500, 502, 503, 504) or a dropped
+  connection up to four times with doubling waits, honouring
+  `Retry-After`. A refresh fetches every advisory one by one, so a single
+  504 on one of them used to fail the whole feed. Definite answers and
+  aborts are not retried; `retry: { attempts, backoffMs }` tunes it.
+
 ## 0.1.9 - 2026-08-17
 
 - Widen the supported `@absolutejs/vulnerabilities` range to include 0.15 and
