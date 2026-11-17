@@ -240,15 +240,87 @@ export const normalizeOsvAdvisory = (
 
 const queryKey = (query: OsvQuery) => JSON.stringify(query);
 
+/* Answers that mean "try again shortly": rate limiting and the gateway or
+ * server failing for a moment. A refresh fetches hundreds of advisories
+ * one by one, so without retrying, one 504 among them failed the whole
+ * refresh. */
+const TRANSIENT_STATUSES = new Set([429, 500, 502, 503, 504]);
+const DEFAULT_ATTEMPTS = 4;
+const DEFAULT_BACKOFF_MS = 1000;
+const MAX_RETRY_AFTER_MS = 30_000;
+
+const waitFor = (ms: number, signal: AbortSignal | undefined) =>
+  new Promise<void>((resolve, reject) => {
+    if (signal?.aborted) {
+      reject(signal.reason);
+      return;
+    }
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(signal?.reason);
+    };
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+
+/* How long OSV asked us to wait, when it said (seconds form only). */
+const retryAfterMs = (response: Response) => {
+  const header = response.headers.get("retry-after");
+  const seconds = header === null ? Number.NaN : Number(header);
+  return Number.isFinite(seconds) && seconds >= 0
+    ? Math.min(seconds * 1000, MAX_RETRY_AFTER_MS)
+    : null;
+};
+
+/**
+ * One OSV request, tried again on a transient answer or a dropped
+ * connection with doubling waits. A definite answer (200, 400, 404) is
+ * returned at once, and an abort is never retried.
+ */
+const fetchWithRetry = async (
+  fetcher: OsvFetch,
+  input: string,
+  init: RequestInit,
+  retry: { attempts: number; backoffMs: number },
+) => {
+  for (let attempt = 1; ; attempt += 1) {
+    const last = attempt >= retry.attempts;
+    const backoff = retry.backoffMs * 2 ** (attempt - 1);
+    let response: Response;
+    try {
+      response = await fetcher(input, init);
+    } catch (error) {
+      if (init.signal?.aborted || last) throw error;
+      await waitFor(backoff, init.signal ?? undefined);
+      continue;
+    }
+    if (!TRANSIENT_STATUSES.has(response.status) || last) return response;
+    await response.body?.cancel();
+    await waitFor(retryAfterMs(response) ?? backoff, init.signal ?? undefined);
+  }
+};
+
 export const createOsvAdapter = (options: {
   apiUrl?: string;
   fetch?: OsvFetch;
   queries: readonly OsvQuery[];
+  /* Tries per request (default 4) and the first wait between them, which
+   * doubles each time (default 1 s). */
+  retry?: { attempts?: number; backoffMs?: number };
 }): FeedAdapter<VulnerabilityAdvisory> => {
   if (options.queries.length === 0)
     throw new Error("At least one OSV query is required");
   const apiUrl = (options.apiUrl ?? OSV_API_URL).replace(/\/$/, "");
-  const fetcher = options.fetch ?? globalThis.fetch;
+  const rawFetcher = options.fetch ?? globalThis.fetch;
+  const retry = {
+    attempts: Math.max(1, options.retry?.attempts ?? DEFAULT_ATTEMPTS),
+    backoffMs: Math.max(0, options.retry?.backoffMs ?? DEFAULT_BACKOFF_MS),
+  };
+  const fetcher = (input: string, init: RequestInit) =>
+    fetchWithRetry(rawFetcher, input, init, retry);
   return {
     descriptor: {
       id: "osv",
