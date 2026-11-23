@@ -10,64 +10,64 @@
     },
     "epss": {
       "name": "@absolutejs/vulnerabilities-epss",
-      "version": "0.1.8",
+      "version": "0.1.9",
       "dependencies": {
         "@absolutejs/manifest": "0.7.2",
         "@sinclair/typebox": "0.34.52",
       },
       "devDependencies": {
-        "@absolutejs/vulnerabilities": "0.16.0",
+        "@absolutejs/vulnerabilities": "0.17.1",
         "@types/bun": "1.3.14",
         "prettier": "3.8.1",
         "typescript": "5.9.3",
       },
       "peerDependencies": {
-        "@absolutejs/vulnerabilities": ">=0.14.0 <0.17",
+        "@absolutejs/vulnerabilities": ">=0.14.0 <0.18",
       },
     },
     "kev": {
       "name": "@absolutejs/vulnerabilities-kev",
-      "version": "0.1.8",
+      "version": "0.1.9",
       "dependencies": {
         "@absolutejs/manifest": "0.7.2",
         "@sinclair/typebox": "0.34.52",
       },
       "devDependencies": {
-        "@absolutejs/vulnerabilities": "0.16.0",
+        "@absolutejs/vulnerabilities": "0.17.1",
         "@types/bun": "1.3.14",
         "prettier": "3.8.1",
         "typescript": "5.9.3",
       },
       "peerDependencies": {
-        "@absolutejs/vulnerabilities": ">=0.14.0 <0.17",
+        "@absolutejs/vulnerabilities": ">=0.14.0 <0.18",
       },
     },
     "osv": {
       "name": "@absolutejs/vulnerabilities-osv",
-      "version": "0.1.11",
+      "version": "0.1.12",
       "dependencies": {
         "@absolutejs/manifest": "0.7.2",
         "@sinclair/typebox": "0.34.52",
       },
       "devDependencies": {
-        "@absolutejs/vulnerabilities": "0.16.0",
+        "@absolutejs/vulnerabilities": "0.17.1",
         "@types/bun": "1.3.14",
         "prettier": "3.8.1",
         "typescript": "5.9.3",
       },
       "peerDependencies": {
-        "@absolutejs/vulnerabilities": ">=0.14.0 <0.17",
+        "@absolutejs/vulnerabilities": ">=0.14.0 <0.18",
       },
     },
     "postgres": {
       "name": "@absolutejs/vulnerabilities-postgres",
-      "version": "0.9.5",
+      "version": "0.9.6",
       "dependencies": {
         "@absolutejs/manifest": "0.7.2",
         "@sinclair/typebox": "0.34.52",
       },
       "devDependencies": {
-        "@absolutejs/vulnerabilities": "0.16.0",
+        "@absolutejs/vulnerabilities": "0.17.1",
         "@electric-sql/pglite": "0.3.14",
         "@types/bun": "1.3.14",
         "drizzle-orm": "1.0.0-rc.4",
@@ -75,26 +75,26 @@
         "typescript": "5.9.3",
       },
       "peerDependencies": {
-        "@absolutejs/vulnerabilities": ">=0.14.0 <0.17",
+        "@absolutejs/vulnerabilities": ">=0.14.0 <0.18",
         "drizzle-orm": ">=1.0.0-rc.4 <2",
       },
     },
     "ubuntu": {
       "name": "@absolutejs/vulnerabilities-ubuntu",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "dependencies": {
         "@absolutejs/manifest": "0.7.2",
         "@sinclair/typebox": "0.34.52",
       },
       "devDependencies": {
-        "@absolutejs/vulnerabilities": "0.16.0",
+        "@absolutejs/vulnerabilities": "0.17.1",
         "@absolutejs/vulnerabilities-osv": "0.1.8",
         "@types/bun": "1.3.14",
         "prettier": "3.8.1",
         "typescript": "5.9.3",
       },
       "peerDependencies": {
-        "@absolutejs/vulnerabilities": ">=0.14.0 <0.17",
+        "@absolutejs/vulnerabilities": ">=0.14.0 <0.18",
         "@absolutejs/vulnerabilities-osv": ">=0.1.8 <0.2.0",
       },
     },
@@ -102,7 +102,7 @@
   "packages": {
     "@absolutejs/manifest": ["@absolutejs/manifest@0.7.2", "", { "peerDependencies": { "@sinclair/typebox": ">=0.34.0 <0.35.0" }, "bin": { "absolute-manifest": "dist/cli.js" } }, "sha512-NSVzC4yHbH+n+WCNdWYrpbc+3k5rOfO4X85Ku9VCP8teRaa2VEibp29Cyvg9rQARUGaQjGGTz+l+APqM0+odxg=="],
 
-    "@absolutejs/vulnerabilities": ["@absolutejs/vulnerabilities@0.16.0", "", { "dependencies": { "@absolutejs/manifest": "0.9.0", "@renovatebot/pep440": "5.0.0", "@sinclair/typebox": "0.34.52", "packageurl-js": "2.0.1", "semver": "7.8.5" }, "bin": { "absolute-vulnerability-evidence": "dist/evidence-cli.js" } }, "sha512-cxpAKu+PFga8dYisYOqJWAwkG6If/ruhz7Ox9j+Mq6yRl7qFltyXnbctxyXz4CPlFn01SPPIwlVj+zoolxW3fw=="],
+    "@absolutejs/vulnerabilities": ["@absolutejs/vulnerabilities@0.17.1", "", { "dependencies": { "@absolutejs/manifest": "0.9.0", "@renovatebot/pep440": "5.0.0", "@sinclair/typebox": "0.34.52", "packageurl-js": "2.0.1", "semver": "7.8.5" }, "bin": { "absolute-vulnerability-evidence": "dist/evidence-cli.js" } }, "sha512-wDBpu7bY9Y0/P89mA+hlXPYjP9hJTHRMBxGgP45f5C31dgB3iBpDmmu1iTPG/Za4aoYsjXGH7eYFQVrTCRE7IA=="],
 
     "@absolutejs/vulnerabilities-epss": ["@absolutejs/vulnerabilities-epss@workspace:epss"],
 
